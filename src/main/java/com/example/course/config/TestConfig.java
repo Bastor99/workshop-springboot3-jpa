@@ -2,6 +2,7 @@ package com.example.course.config;
 
 import com.example.course.entities.Order;
 import com.example.course.entities.User;
+import com.example.course.entities.enums.OrderStatus;
 import com.example.course.repositiories.OrderRepository;
 import com.example.course.repositiories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,11 @@ public class TestConfig implements CommandLineRunner {
         User u2 = User.builder().id(null).name("Alex Green").email("alex@gmail.com")
                 .phone("977777777").password("123456").build();
 
-        Order o1 = Order.builder().id(null).moment(Instant.parse("2019-06-20T19:53:07Z"))
-                .client(u1).build();
+        Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), OrderStatus.PAID, u1);
 
-        Order o2 = Order.builder().id(null).moment(Instant.parse("2019-07-21T03:42:10Z"))
-                .client(u2).build();
+        Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, u2);
 
-        Order o3 = Order.builder().id(null).moment(Instant.parse("2019-07-22T15:21:22Z"))
-                .client(u1).build();
+        Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.WAITING_PAYMENT, u1);
 
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
